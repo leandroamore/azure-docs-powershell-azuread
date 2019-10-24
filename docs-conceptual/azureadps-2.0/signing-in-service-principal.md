@@ -32,7 +32,7 @@ Connect-AzureAD
 We'll use a self signed certificate for this example, so let's create one. You'll want to replace the <password> string inthe below example with a password of your choice, this is the password that is used to create the certificate file.
 
 ```powershell
-$pwd = "<password>"
+$pwd = ConvertTo-SecureString -String "<password>" -Force -AsPlainText
 $thumb = (New-SelfSignedCertificate -DnsName "drumkit.onmicrosoft.com" -CertStoreLocation "cert:\LocalMachine\My"  -KeyExportPolicy Exportable -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" -NotAfter $notAfter).Thumbprint
 $pwd = ConvertTo-SecureString -String $pwd -Force -AsPlainText
 Export-PfxCertificate -cert "cert:\localmachine\my\$thumb" -FilePath c:\temp\examplecert.pfx -Password $pwd
